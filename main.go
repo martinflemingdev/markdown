@@ -46,6 +46,13 @@ func main() {
 		{Name: "Alice", Fruits: []Fruit{{Fruit: "Apple", Number: "3"}, {Fruit: "Banana", Number: "5"}}},
 		{Name: "Bob", Fruits: []Fruit{{Fruit: "Orange", Number: "2"}}},
 		{Name: "Charlie", Fruits: []Fruit{}},
+		{Name: "Martin", Fruits: []Fruit{
+			{Fruit: "Mango", Number: "1"},
+			{Fruit: "Pineapple", Number: "2"},
+			{Fruit: "Strawberry", Number: "3"},
+			{Fruit: "Blueberry", Number: "4"},
+			{Fruit: "Raspberry", Number: "5"},
+		}},
 	}
 
 	result, err := renderTable(data)
