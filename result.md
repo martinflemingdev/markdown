@@ -4,3 +4,4 @@
 | Alice | Apple |
 |  | Banana |
 | Bob | Orange |
+| Charlie | N/A |

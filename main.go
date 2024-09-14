@@ -17,7 +17,7 @@ func renderTable(data []NameFruits) (string, error) {
 | name | fruits |
 | ---- | ------ |
 {{- range . }}
-| {{ .Name }} | {{ index .Fruits 0 }} |
+| {{ .Name }} | {{ if gt (len .Fruits) 0 }}{{ index .Fruits 0 }}{{ else }}N/A{{ end }} |
 {{- range $index, $fruit := .Fruits -}}
 	{{- if gt $index 0 }}
 |  | {{ $fruit }} |
@@ -38,6 +38,7 @@ func main() {
 	data := []NameFruits{
 		{Name: "Alice", Fruits: []string{"Apple", "Banana"}},
 		{Name: "Bob", Fruits: []string{"Orange"}},
+		{Name: "Charlie", Fruits: []string{}},
 	}
 
 	result, err := renderTable(data)
