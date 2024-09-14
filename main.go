@@ -9,24 +9,31 @@ import (
 
 type NameFruits struct {
 	Name   string
-	Fruits []string
+	Fruits []Fruit
+}
+
+type Fruit struct {
+	Fruit  string
+	Number string
 }
 
 func renderTable(data []NameFruits) (string, error) {
 	const tmpl = `
-| name | fruits |
-| ---- | ------ |
+| name    | fruit | number |
+| ------- | ----- | ------ |
 {{- range . }}
-| {{ .Name }} | {{ if gt (len .Fruits) 0 }}{{ index .Fruits 0 }}{{ else }}N/A{{ end }} |
-{{- range $index, $fruit := .Fruits -}}
-	{{- if gt $index 0 }}
-|  | {{ $fruit }} |
+	{{- $name := .Name -}}
+	{{- if eq (len .Fruits) 0 }}
+| {{ $name }} | N/A   | N/A   |
+	{{- else }}
+		{{- range $index, $fruit := .Fruits }}
+| {{ if eq $index 0 }}{{ $name }}{{ else }}   {{ end }} | {{ $fruit.Fruit }} | {{ $fruit.Number }} |
+		{{- end }}
 	{{- end }}
-{{- end }}
 {{- end }}
 `
 	t := template.Must(template.New("table").Parse(tmpl))
-	
+
 	var buf bytes.Buffer
 	if err := t.Execute(&buf, data); err != nil {
 		return "", err
@@ -36,9 +43,9 @@ func renderTable(data []NameFruits) (string, error) {
 
 func main() {
 	data := []NameFruits{
-		{Name: "Alice", Fruits: []string{"Apple", "Banana"}},
-		{Name: "Bob", Fruits: []string{"Orange"}},
-		{Name: "Charlie", Fruits: []string{}},
+		{Name: "Alice", Fruits: []Fruit{{Fruit: "Apple", Number: "3"}, {Fruit: "Banana", Number: "5"}}},
+		{Name: "Bob", Fruits: []Fruit{{Fruit: "Orange", Number: "2"}}},
+		{Name: "Charlie", Fruits: []Fruit{}},
 	}
 
 	result, err := renderTable(data)
